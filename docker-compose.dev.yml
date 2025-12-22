@@ -47,7 +47,6 @@ services:
     build:
       context: ./
       dockerfile: ./docker/Dockerfile_app_dev
-    user: '${UID}:${GID}'
     volumes:
       - dev-app-data:/var/www/html
       - dev-public-data:/var/www/html/public
@@ -71,7 +70,6 @@ services:
       - dev-app-network
     depends_on:
       - dev-pgsql
-
 
 volumes:
   dev-db-data:
