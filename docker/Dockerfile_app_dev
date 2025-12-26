@@ -1,4 +1,4 @@
-FROM node:25-alpine3.22 as node_builder
+FROM node:25-alpine3.22 AS node_builder
 LABEL stage=builder
 WORKDIR /builder
 COPY /app/package.json /builder/package.json
@@ -10,7 +10,7 @@ COPY /app/resources /builder/resources
 RUN npm run build
 
 
-FROM ghcr.io/geekcodev/php:8.4 as php_builder
+FROM ghcr.io/geekcodev/php:8.4 AS php_builder
 LABEL stage=builder
 WORKDIR /build
 COPY /app/composer.json ./

@@ -3,6 +3,14 @@ services:
   dev-pgsql:
     restart: always
     image: postgres:18.1-alpine3.22
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1024M
+        reservations:
+          cpus: '0.5'
+          memory: 512M
     volumes:
       - dev-db-data:/var/lib/postgresql/data
     environment:
@@ -16,6 +24,14 @@ services:
   dev-redis:
     restart: always
     image: redis:8.4-alpine3.22
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1024M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
     environment:
       - TZ=Europe/Moscow
     networks:
@@ -28,6 +44,14 @@ services:
     build:
       context: ./
       dockerfile: ./docker/Dockerfile_nginx_dev
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
     volumes:
       - dev-app-data:/var/www/html
       - dev-public-data:/var/www/html/public
@@ -47,6 +71,14 @@ services:
     build:
       context: ./
       dockerfile: ./docker/Dockerfile_app_dev
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1024M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
     volumes:
       - dev-app-data:/var/www/html
       - dev-public-data:/var/www/html/public
